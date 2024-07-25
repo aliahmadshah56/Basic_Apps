@@ -15,3 +15,28 @@ const cStyle=TextStyle(
   fontSize: 25,
   fontWeight: FontWeight.bold,
 );
+
+const titleStyle =TextStyle(
+  fontSize: 50,
+  fontWeight: FontWeight.bold
+);
+
+const noStyle =TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.green
+);
+
+const numStyle =TextStyle(
+    fontSize: 60,
+    fontWeight: FontWeight.bold,
+    color: Colors.white
+);
+
+const linestyle =TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: Colors.white
+);
+
+

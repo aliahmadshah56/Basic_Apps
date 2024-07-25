@@ -1,15 +1,13 @@
+import 'package:bmi/calculateData.dart';
 import 'package:bmi/result.dart';
 import 'package:bmi/tStyle.dart';
 import 'package:flutter/material.dart';
 
+import 'calculateData.dart';
 import 'container.dart';
 import 'iconandtext.dart';
 
-
-enum Gender{
-  male,
-  female
-}
+enum Gender { male, female }
 
 class Input extends StatefulWidget {
   const Input({super.key});
@@ -19,14 +17,13 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
+  Gender? selectGen;
+  int sHeight = 180;
+  int sliderw = 60;
+  int slidera = 20;
 
-   Gender ? selectGen;
-   int sHeight=180;
-   int sliderw=60;
-   int slidera=20;
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: Text('BMI Calculator'),
@@ -38,34 +35,36 @@ class _InputState extends State<Input> {
               child: Row(
                 children: [
                   Expanded(
-                      child: RepaeatContainer(
-                        onPressed: (){
-                          setState(() {
-                            selectGen=Gender.male;
-                          });
-                        },
-                        color: selectGen==Gender.male?activeColor:deActiveColor,
-                        cardWidget: columnWidget(
-                          ico: Icons.male,
-                          txt: 'MALE',
-                        ),
+                    child: RepaeatContainer(
+                      onPressed: () {
+                        setState(() {
+                          selectGen = Gender.male;
+                        });
+                      },
+                      color: selectGen == Gender.male
+                          ? activeColor
+                          : deActiveColor,
+                      cardWidget: columnWidget(
+                        ico: Icons.male,
+                        txt: 'MALE',
                       ),
-
+                    ),
                   ),
                   Expanded(
-                      child: RepaeatContainer(
-                        onPressed: (){
-                          setState(() {
-                            selectGen=Gender.female;
-                          });
-                        },
-                        color: selectGen==Gender.female?activeColor:deActiveColor,
-                        cardWidget: columnWidget(
-                          ico: Icons.female,
-                          txt: "FEMALE",
-                        ),
+                    child: RepaeatContainer(
+                      onPressed: () {
+                        setState(() {
+                          selectGen = Gender.female;
+                        });
+                      },
+                      color: selectGen == Gender.female
+                          ? activeColor
+                          : deActiveColor,
+                      cardWidget: columnWidget(
+                        ico: Icons.female,
+                        txt: "FEMALE",
                       ),
-
+                    ),
                   ),
                 ],
               ),
@@ -73,31 +72,36 @@ class _InputState extends State<Input> {
             Expanded(
                 child: new RepaeatContainer(
               color: Color(0xFF1D1E33),
-                  cardWidget: Column(
+              cardWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: tStyle,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('HEIGHT',
-                      style: tStyle,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(sHeight.toString(),style: nStyle,),
-                          Text('cm',style: tStyle),
-                        ],
+                      Text(
+                        sHeight.toString(),
+                        style: nStyle,
                       ),
-                      Slider(value: sHeight.toDouble(),
-                          min:120,
-                          max:220,
-                          activeColor: Color(0XFFEB1555),
-                          inactiveColor: Color(0xFF8D8e98),
-                          onChanged: (double newValue){
-                        setState(() {
-                          sHeight=newValue.round();
-
-                        });
-                          })
+                      Text('cm', style: tStyle),
                     ],
                   ),
+                  Slider(
+                      value: sHeight.toDouble(),
+                      min: 120,
+                      max: 220,
+                      activeColor: Color(0XFFEB1555),
+                      inactiveColor: Color(0xFF8D8e98),
+                      onChanged: (double newValue) {
+                        setState(() {
+                          sHeight = newValue.round();
+                        });
+                      })
+                ],
+              ),
             )),
             Expanded(
               child: Row(
@@ -137,11 +141,15 @@ class _InputState extends State<Input> {
                     ),
                   ),
                   Expanded(
-                      child: new RepaeatContainer(color: Color(0xFF1D1E33),
+                      child: new RepaeatContainer(
+                          color: Color(0xFF1D1E33),
                           cardWidget: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('AGE',style: tStyle,),
+                              Text(
+                                'AGE',
+                                style: tStyle,
+                              ),
                               Text(
                                 slidera.toString(),
                                 style: nStyle,
@@ -166,24 +174,29 @@ class _InputState extends State<Input> {
                                       });
                                     },
                                   ),
-
                                 ],
                               )
                             ],
-                          )
-
-                      )
-                  ),
-
+                          ))),
                 ],
               ),
             ),
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Result()));
+              onTap: () {
+                CalculateBrain calc =CalculateBrain(height: sHeight, weight: sliderw);
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Result(
+                  bmiR: calc.calculateBMI(),
+                  interprataion: calc.getInterpretation(),
+                  resultT: calc.getResult(),
+                )));
               },
               child: Container(
-                child: Center(child: Text("Calculate",style: cStyle,)),
+                child: Center(
+                    child: Text(
+                  "Calculate",
+                  style: cStyle,
+                )),
                 color: Color(0xFFEB1555),
                 margin: EdgeInsets.only(top: 10),
                 width: double.infinity,
@@ -194,7 +207,6 @@ class _InputState extends State<Input> {
         ));
   }
 }
-
 
 class RoundIcon extends StatelessWidget {
   final IconData icondata;
