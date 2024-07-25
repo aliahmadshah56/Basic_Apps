@@ -10,3 +10,8 @@ const nStyle=TextStyle(
 fontSize: 50,
 fontWeight: FontWeight.w900,
 );
+
+const cStyle=TextStyle(
+  fontSize: 25,
+  fontWeight: FontWeight.bold,
+);

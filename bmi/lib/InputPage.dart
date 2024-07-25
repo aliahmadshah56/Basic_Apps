@@ -1,3 +1,4 @@
+import 'package:bmi/result.dart';
 import 'package:bmi/tStyle.dart';
 import 'package:flutter/material.dart';
 
@@ -102,26 +103,39 @@ class _InputState extends State<Input> {
               child: Row(
                 children: [
                   Expanded(
-                      child: new RepaeatContainer(
-                    color: Color(0xFF1D1E33),
-                        cardWidget: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('WEIGHT',style: tStyle,),
-                            Text(
-                              sliderw.toString(),
-                              style: nStyle,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-
-                              ],
-                            )
-                          ],
-                        )
-                        
-                  )),
+                    child: RepaeatContainer(
+                      color: Color(0xFF1D1E33),
+                      cardWidget: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('WEIGHT', style: tStyle),
+                          Text(sliderw.toString(), style: nStyle),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RoundIcon(
+                                icondata: Icons.remove,
+                                onPress: () {
+                                  setState(() {
+                                    sliderw--;
+                                  });
+                                },
+                              ),
+                              SizedBox(width: 10.0),
+                              RoundIcon(
+                                icondata: Icons.add,
+                                onPress: () {
+                                  setState(() {
+                                    sliderw++;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   Expanded(
                       child: new RepaeatContainer(color: Color(0xFF1D1E33),
                           cardWidget: Column(
@@ -135,6 +149,23 @@ class _InputState extends State<Input> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  RoundIcon(
+                                    icondata: Icons.remove,
+                                    onPress: () {
+                                      setState(() {
+                                        slidera--;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  RoundIcon(
+                                    icondata: Icons.add,
+                                    onPress: () {
+                                      setState(() {
+                                        slidera++;
+                                      });
+                                    },
+                                  ),
 
                                 ],
                               )
@@ -143,10 +174,46 @@ class _InputState extends State<Input> {
 
                       )
                   ),
+
                 ],
               ),
             ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Result()));
+              },
+              child: Container(
+                child: Center(child: Text("Calculate",style: cStyle,)),
+                color: Color(0xFFEB1555),
+                margin: EdgeInsets.only(top: 10),
+                width: double.infinity,
+                height: 80,
+              ),
+            )
           ],
         ));
+  }
+}
+
+
+class RoundIcon extends StatelessWidget {
+  final IconData icondata;
+  final VoidCallback onPress;
+
+  RoundIcon({required this.icondata, required this.onPress});
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icondata),
+      onPressed: onPress,
+      elevation: 6.0,
+      constraints: BoxConstraints.tightFor(
+        height: 56.0,
+        width: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+    );
   }
 }
