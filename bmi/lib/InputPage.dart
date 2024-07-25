@@ -18,54 +18,28 @@ class _InputState extends State<Input> {
         children: [
           Expanded(
             child: Row(
-            children: [
-              Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF101E33),
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                  )
-              ),
-              Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: Color(0xFF101E33),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                  )
-              ),
-            ],
-          ),),
-          Expanded(child: Container(
-            margin: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-                color: Color(0xFF101E33),
-                borderRadius: BorderRadius.circular(10)
+              children: [
+                Expanded(
+                  child: RepaeatContainer(color: Color(0xFF1D1E33)),
+                ),
+                Expanded(
+                  child: RepaeatContainer(color: Color(0xFF1D1E33)),
+                ),
+              ],
             ),
-          )),
+          ),
+
+          Expanded(
+              child: new RepaeatContainer(color: Color(0xFF1D1E33))
+          ),
           Expanded(
             child: Row(
             children: [
               Expanded(
-                child: Container(
-                  margin: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF101E33),
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                )
+                  child: new RepaeatContainer(color: Color(0xFF1D1E33))
             ),
               Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        color: Color(0xFF101E33),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                  )
+                  child:new RepaeatContainer(color: Color(0xFF1D1E33))
               ),
 
 
@@ -73,6 +47,23 @@ class _InputState extends State<Input> {
           ),),
         ],
       )
+    );
+  }
+}
+
+class RepaeatContainer extends StatelessWidget {
+  final Color color;
+
+  const RepaeatContainer({required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10),
+      ),
     );
   }
 }
