@@ -5,7 +5,6 @@ class RepaeatContainer extends StatelessWidget {
 
   final Color color;
   final Widget? cardWidget;
-
   final Function? onPressed;
 
   @override

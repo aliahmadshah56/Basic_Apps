@@ -1,10 +1,10 @@
+import 'package:bmi/tStyle.dart';
 import 'package:flutter/material.dart';
 
 import 'container.dart';
 import 'iconandtext.dart';
 
-const activeColor = Color(0xFF1D1E33);
-const deActiveColor = Color(0xFF111328);
+
 enum Gender{
   male,
   female
@@ -28,6 +28,7 @@ class _InputState extends State<Input> {
           title: Text('BMI Calculator'),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: Row(
@@ -45,7 +46,7 @@ class _InputState extends State<Input> {
                           txt: 'MALE',
                         ),
                       ),
-                    ),
+
                   ),
                   Expanded(
                       child: RepaeatContainer(
@@ -60,7 +61,7 @@ class _InputState extends State<Input> {
                           txt: "FEMALE",
                         ),
                       ),
-                    ),
+
                   ),
                 ],
               ),
@@ -68,6 +69,12 @@ class _InputState extends State<Input> {
             Expanded(
                 child: new RepaeatContainer(
               color: Color(0xFF1D1E33),
+                  cardWidget: Column(
+                    children: [
+                      Text('HEIGHT',
+                      style: tStyle,)
+                    ],
+                  ),
             )),
             Expanded(
               child: Row(

@@ -1,3 +1,4 @@
+import 'package:bmi/tStyle.dart';
 import 'package:flutter/cupertino.dart';
 
 class columnWidget extends StatelessWidget {
@@ -16,10 +17,9 @@ class columnWidget extends StatelessWidget {
         ),
         SizedBox(height: 10,),
         Text(txt,
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-          ),)],
+          style: tStyle,
+        )
+      ],
     );
   }
 }
