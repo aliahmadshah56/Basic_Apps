@@ -20,6 +20,7 @@ class Input extends StatefulWidget {
 class _InputState extends State<Input> {
 
    Gender ? selectGen;
+   int sHeight=180;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +71,28 @@ class _InputState extends State<Input> {
                 child: new RepaeatContainer(
               color: Color(0xFF1D1E33),
                   cardWidget: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('HEIGHT',
-                      style: tStyle,)
+                      style: tStyle,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(sHeight.toString(),style: nStyle,),
+                          Text('cm',style: tStyle),
+                        ],
+                      ),
+                      Slider(value: sHeight.toDouble(),
+                          min:120,
+                          max:220,
+                          activeColor: Color(0XFFEB1555),
+                          inactiveColor: Color(0xFF8D8e98),
+                          onChanged: (double newValue){
+                        setState(() {
+                          sHeight=newValue.round();
+
+                        });
+                          })
                     ],
                   ),
             )),

@@ -6,3 +6,7 @@ const tStyle=TextStyle(
 fontSize: 20,
 fontWeight: FontWeight.bold
 );
+const nStyle=TextStyle(
+fontSize: 50,
+fontWeight: FontWeight.w900,
+);
