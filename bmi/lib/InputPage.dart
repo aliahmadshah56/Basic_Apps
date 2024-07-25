@@ -21,9 +21,11 @@ class _InputState extends State<Input> {
 
    Gender ? selectGen;
    int sHeight=180;
-
+   int sliderw=60;
+   int slidera=20;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           title: Text('BMI Calculator'),
@@ -102,9 +104,45 @@ class _InputState extends State<Input> {
                   Expanded(
                       child: new RepaeatContainer(
                     color: Color(0xFF1D1E33),
+                        cardWidget: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('WEIGHT',style: tStyle,),
+                            Text(
+                              sliderw.toString(),
+                              style: nStyle,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+                              ],
+                            )
+                          ],
+                        )
+                        
                   )),
                   Expanded(
-                      child: new RepaeatContainer(color: Color(0xFF1D1E33))),
+                      child: new RepaeatContainer(color: Color(0xFF1D1E33),
+                          cardWidget: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('AGE',style: tStyle,),
+                              Text(
+                                slidera.toString(),
+                                style: nStyle,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+
+                                ],
+                              )
+                            ],
+                          )
+
+                      )
+                  ),
                 ],
               ),
             ),
