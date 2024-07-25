@@ -5,6 +5,10 @@ import 'iconandtext.dart';
 
 const activeColor = Color(0xFF1D1E33);
 const deActiveColor = Color(0xFF111328);
+enum Gender{
+  male,
+  female
+}
 
 class Input extends StatefulWidget {
   const Input({super.key});
@@ -17,12 +21,12 @@ class _InputState extends State<Input> {
   Color maleColor = deActiveColor;
   Color femaleColor = deActiveColor;
 
-  void updateColor(int gen) {
-    if (gen == 1) {
+  void updateColor(Gender gen) {
+    if (gen == Gender.male) {
       maleColor = activeColor;
       femaleColor = deActiveColor;
     }
-    if (gen == 2) {
+    if (gen == Gender.female) {
       maleColor = deActiveColor;
       femaleColor = activeColor;
     }
@@ -43,7 +47,7 @@ class _InputState extends State<Input> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          updateColor(1);
+                          updateColor(Gender.male);
                         });
                       },
                       child: RepaeatContainer(
@@ -59,7 +63,7 @@ class _InputState extends State<Input> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          updateColor(2);
+                          updateColor(Gender.female);
                         });
                       },
                       child: RepaeatContainer(
