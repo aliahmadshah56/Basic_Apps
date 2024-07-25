@@ -1,20 +1,26 @@
 import 'package:flutter/cupertino.dart';
 
 class RepaeatContainer extends StatelessWidget {
+  RepaeatContainer({required this.color, this.cardWidget, this.onPressed});
 
-  RepaeatContainer({required this.color, this.cardWidget});
   final Color color;
   final Widget? cardWidget;
 
+  final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15),
-      child: cardWidget,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: () {
+        onPressed!();
+      },
+      child: Container(
+        margin: EdgeInsets.all(15),
+        child: cardWidget,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

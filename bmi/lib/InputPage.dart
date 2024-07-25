@@ -33,13 +33,12 @@ class _InputState extends State<Input> {
               child: Row(
                 children: [
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectGen=Gender.male;
-                        });
-                      },
                       child: RepaeatContainer(
+                        onPressed: (){
+                          setState(() {
+                            selectGen=Gender.male;
+                          });
+                        },
                         color: selectGen==Gender.male?activeColor:deActiveColor,
                         cardWidget: columnWidget(
                           ico: Icons.male,
@@ -49,13 +48,12 @@ class _InputState extends State<Input> {
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectGen=Gender.female;
-                        });
-                      },
                       child: RepaeatContainer(
+                        onPressed: (){
+                          setState(() {
+                            selectGen=Gender.female;
+                          });
+                        },
                         color: selectGen==Gender.female?activeColor:deActiveColor,
                         cardWidget: columnWidget(
                           ico: Icons.female,
