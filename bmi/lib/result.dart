@@ -1,11 +1,11 @@
 import 'package:bmi/tStyle.dart';
 import 'package:flutter/material.dart';
 
-import 'InputPage.dart';
 import 'container.dart';
+import 'gen.dart';
 
 class Result extends StatelessWidget {
-  Result({required this.bmiR,required this.interprataion,required this.resultT});
+  Result({required this.bmiR,required this.interprataion,required this.resultT, required String interpretation});
  final String bmiR;
  final String resultT;
  final String interprataion;
@@ -50,7 +50,7 @@ class Result extends StatelessWidget {
           )),
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Input()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>GenderSelection()));
             },
             child: Container(
               child: Center(child: Text("Recalculate",style: cStyle,)),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'InputPage.dart';
+import 'gen.dart';
 
 void main() => runApp(BMI());
 
@@ -11,10 +10,10 @@ class BMI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Input(),
+      home: const GenderSelection(),
       theme: ThemeData.dark().copyWith(
-        primaryColor: Color(0xFF0A0E21),
-        scaffoldBackgroundColor: Color(0xFF0A0E21),
+        primaryColor: const Color(0xFF0A0E21),
+        scaffoldBackgroundColor: const Color(0xFF0A0E21),
       ),
     );
   }
