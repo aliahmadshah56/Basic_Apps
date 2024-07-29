@@ -162,7 +162,6 @@ class _TablePageState extends State<TablePage> {
             child: Container(
               decoration: BoxDecoration(
                 color: const Color(0xFFEB1555),
-                borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(
                   color: Colors.black, // Border color
                   width: 2.0, // Border width

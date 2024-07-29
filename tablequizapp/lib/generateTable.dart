@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tablequizapp/quiz.dart';
 import 'package:tablequizapp/tstyle.dart';
 
-// Import your custom container
 import 'container.dart';
 
 class genTable extends StatelessWidget {
@@ -76,7 +75,7 @@ class genTable extends StatelessWidget {
               width: double.infinity,
               height: 50,
               child: const Center(
-                child: Text("Generate QUIZ", style: nStyle),
+                child: Text("Generate Quiz", style: nStyle),
               ),
             ),
           )

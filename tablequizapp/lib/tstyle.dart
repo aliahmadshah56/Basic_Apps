@@ -6,6 +6,6 @@ const TextStyle tStyle = TextStyle(
 );
 
 const TextStyle nStyle = TextStyle(
-  fontSize: 30.0,
+  fontSize: 20.0,
   fontWeight: FontWeight.w900,
 );

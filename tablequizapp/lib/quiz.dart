@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tablequizapp/question.dart';
+import 'container.dart';
 import 'quiz_brain.dart';
-import 'dart:math';
+
 
 class QuizPage extends StatefulWidget {
   final int tableNumber;
@@ -21,6 +22,8 @@ class _QuizPageState extends State<QuizPage> {
   String feedbackText = ''; // Feedback text variable
   int correctAnswers = 0; // Track the number of correct answers
 
+  List<Color> buttonColors = [Color(0xFF1D1E33), Color(0xFF1D1E33), Color(0xFF1D1E33)];
+
   late List<Question> questions;
 
   @override
@@ -29,12 +32,15 @@ class _QuizPageState extends State<QuizPage> {
     questions = generateQuestions(widget.tableNumber, widget.start, widget.end);
     quizBrain.setQuestions(questions);  // Update the questions in quizBrain
   }
+  void count(){
+    ++correctAnswers;
+  }
 
   void checkAnswer(int userPickedAnswer) {
     int correctAnswer = quizBrain.getCorrectAnswer();
 
     setState(() {
-      if (questionIndex >= maxQuestions - 1 || quizBrain.isFinished()) {
+      if (questionIndex >= maxQuestions  ) {
         // Show result dialog
         showDialog(
           context: context,
@@ -50,7 +56,10 @@ class _QuizPageState extends State<QuizPage> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the dialog
-                    Navigator.pop(context); // Navigate back to previous page or home page
+                    Navigator.pop(context); //
+                    quizBrain.reset();
+                    scoreKeeper = [];
+                    questionIndex = 0; // Navigate back to previous page or home page
                   },
                   child: Text('OK'),
                 ),
@@ -58,10 +67,8 @@ class _QuizPageState extends State<QuizPage> {
             );
           },
         );
-        // Reset quiz
-        quizBrain.reset();
-        scoreKeeper = [];
-        questionIndex = 0; // Reset question index
+
+       // Reset question index
       } else {
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(Icon(
@@ -69,7 +76,7 @@ class _QuizPageState extends State<QuizPage> {
             color: Colors.green,
           ));
           feedbackText = 'GOOD'; // Set positive feedback for correct answer
-          correctAnswers++; // Increment correct answers count
+           count();// Increment correct answers count
         } else {
           scoreKeeper.add(Icon(
             Icons.close,
@@ -104,65 +111,23 @@ class _QuizPageState extends State<QuizPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            flex: 5,
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Center(
-                child: Text(
-                  quizBrain.getQuestionText(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.white,
+            child: RepaeatContainer(
+              color: const Color(0xFF1D1E33),
+              cardWidget :Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Center(
+                  child: Text(
+                    quizBrain.getQuestionText(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-          ...options.map((option) {
-            return Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  checkAnswer(option);
-                },
-                child: Text(
-                  option.toString(),
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Navigate to generate table page
-                  Navigator.pop(context);
-                },
-                child: Text('Generate Table'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (questionIndex < maxQuestions - 1) {
-                    setState(() {
-                      quizBrain.nextQuestion();
-                      questionIndex++;
-                    });
-                  }
-                },
-                child: Text('Next Question'),
-              ),
-            ],
-          ),
-          Row(
-            children: scoreKeeper,
-          ),
-          // Display feedback text here
           Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
@@ -176,6 +141,73 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
           ),
+        ...options.asMap().entries.map((entry) {
+      int index = entry.key;
+      var option = entry.value;
+
+      return Padding(
+        padding: EdgeInsets.all(15.0),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(buttonColors[index % buttonColors.length]),
+          ),
+          onPressed: () {
+            checkAnswer(option);
+          },
+          child: Text(
+            option.toString(),
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }).toList(),
+
+
+    Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Color(0xFFEB1555))
+                ),
+                onPressed: () {
+                  // Navigate to generate table page
+                  Navigator.pop(context);
+                },
+                child: Text('Generate Table',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                ),),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Color(0xFFEB1555))
+                ),
+                onPressed: () {
+                  if (questionIndex < maxQuestions - 1) {
+                    setState(() {
+                      quizBrain.nextQuestion();
+                      ++questionIndex;
+                    });
+                  }
+                },
+                child: Text('Next Question',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                )),
+              ),
+            ],
+          ),
+          Row(
+            children: scoreKeeper,
+          ),
+          // Display feedback text here
+
         ],
       ),
     );

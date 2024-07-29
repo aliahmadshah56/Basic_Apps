@@ -26,7 +26,6 @@ class QuizBrain {
 
   bool isFinished() {
     if (_questionNumber >= _questionBank.length - 1) {
-      print('Now returning true');
       return true;
     } else {
       return false;
