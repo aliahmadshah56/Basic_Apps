@@ -1,6 +1,7 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:tablequizapp/generateTable.dart';
-import 'package:tablequizapp/tstyle.dart';
+import 'generateTable.dart';
+import 'tstyle.dart';
 import 'container.dart';
 
 class TablePage extends StatefulWidget {
@@ -15,11 +16,17 @@ class _TablePageState extends State<TablePage> {
   int start = 1;
   int end = 10;
 
+  void PlaySound(String fileName) {
+    AssetsAudioPlayer.newPlayer().open(
+      Audio('assets/$fileName'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BMI Calculator'),
+        title: const Text('Table Generator'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,19 +41,17 @@ class _TablePageState extends State<TablePage> {
                     'Table #',
                     style: nStyle,
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(),
-                      Text(
-                        '0',
-                      ),
+                      const Spacer(),
+                      const Text('0'),
                       Slider(
                         value: table.toDouble(),
                         min: 0,
                         max: 30,
-                        divisions: 29,
+                        divisions: 30,
                         label: table.round().toString(),
                         onChanged: (double value) {
                           setState(() {
@@ -54,10 +59,8 @@ class _TablePageState extends State<TablePage> {
                           });
                         },
                       ),
-                      Text(
-                        '30',
-                      ),
-                      Spacer(),
+                      const Text('30'),
+                      const Spacer(),
                     ],
                   ),
                 ],
@@ -74,31 +77,26 @@ class _TablePageState extends State<TablePage> {
                     'Start #',
                     style: nStyle,
                   ),
-
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(),
-                      Text(
-                        '1',
-                      ),
+                      const Spacer(),
+                      const Text('0'),
                       Slider(
                         value: start.toDouble(),
-                        min: 1,
+                        min: 0,
                         max: 30,
                         label: start.round().toString(),
-                        divisions: 29,
+                        divisions: 30,
                         onChanged: (double newValue) {
                           setState(() {
                             start = newValue.round();
                           });
                         },
                       ),
-                      Text(
-                        '30',
-                      ),
-                      Spacer(),
+                      const Text('30'),
+                      const Spacer(),
                     ],
                   ),
                 ],
@@ -115,15 +113,12 @@ class _TablePageState extends State<TablePage> {
                     'End #',
                     style: nStyle,
                   ),
-
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(),
-                      Text(
-                        '0',
-                      ),
+                      const Spacer(),
+                      const Text('1'),
                       Slider(
                         value: end.toDouble(),
                         min: 1,
@@ -136,10 +131,8 @@ class _TablePageState extends State<TablePage> {
                           });
                         },
                       ),
-                      Text(
-                        '50',
-                      ),
-                      Spacer(),
+                      const Text('50'),
+                      const Spacer(),
                     ],
                   ),
                 ],
@@ -148,6 +141,7 @@ class _TablePageState extends State<TablePage> {
           ),
           GestureDetector(
             onTap: () {
+              PlaySound('note7.mp3');
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -162,9 +156,10 @@ class _TablePageState extends State<TablePage> {
             child: Container(
               decoration: BoxDecoration(
                 color: const Color(0xFFEB1555),
+                borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(
-                  color: Colors.black, // Border color
-                  width: 2.0, // Border width
+                  color: Colors.black,
+                  width: 2.0,
                 ),
               ),
               margin: const EdgeInsets.only(
@@ -178,7 +173,7 @@ class _TablePageState extends State<TablePage> {
               child: const Center(
                 child: Text(
                   "Generate Table",
-                  style: nStyle
+                  style: nStyle,
                 ),
               ),
             ),

@@ -1,8 +1,9 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:tablequizapp/question.dart';
+import 'package:tablequizapp/tstyle.dart';
 import 'container.dart';
 import 'quiz_brain.dart';
-
 
 class QuizPage extends StatefulWidget {
   final int tableNumber;
@@ -32,7 +33,14 @@ class _QuizPageState extends State<QuizPage> {
     questions = generateQuestions(widget.tableNumber, widget.start, widget.end);
     quizBrain.setQuestions(questions);  // Update the questions in quizBrain
   }
-  void count(){
+
+  void PlaySound(String fileName) {
+    AssetsAudioPlayer.newPlayer().open(
+      Audio('assets/$fileName'),
+    );
+  }
+
+  void count() {
     ++correctAnswers;
   }
 
@@ -40,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
     int correctAnswer = quizBrain.getCorrectAnswer();
 
     setState(() {
-      if (questionIndex >= maxQuestions  ) {
+      if (questionIndex >= maxQuestions) {
         // Show result dialog
         showDialog(
           context: context,
@@ -48,14 +56,15 @@ class _QuizPageState extends State<QuizPage> {
             return AlertDialog(
               title: Text('Quiz Complete'),
               content: Text(
-                  'Congratulations! You have completed the quiz.\n'
-                      'Total Questions: $maxQuestions\n'
-                      'Correct Answers: $correctAnswers\n'
+                'Congratulations! You have completed the quiz.\n'
+                    'Total Questions: $maxQuestions\n'
+                    'Correct Answers: $correctAnswers\n',
               ),
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop();
+                    PlaySound('note7.mp3');// Close the dialog
                     Navigator.pop(context); //
                     quizBrain.reset();
                     scoreKeeper = [];
@@ -68,16 +77,18 @@ class _QuizPageState extends State<QuizPage> {
           },
         );
 
-       // Reset question index
+        // Reset question index
       } else {
         if (userPickedAnswer == correctAnswer) {
+          PlaySound('note1.wav'); // Correct answer sound
           scoreKeeper.add(Icon(
             Icons.check,
             color: Colors.green,
           ));
           feedbackText = 'GOOD'; // Set positive feedback for correct answer
-           count();// Increment correct answers count
+          count(); // Increment correct answers count
         } else {
+          PlaySound('note6.mp3'); // Incorrect answer sound
           scoreKeeper.add(Icon(
             Icons.close,
             color: Colors.red,
@@ -96,7 +107,7 @@ class _QuizPageState extends State<QuizPage> {
       generatedQuestions.add(Question('$tableNumber x $i', tableNumber * i));
     }
     generatedQuestions.shuffle(); // Randomize the order of questions
-    return generatedQuestions.take(maxQuestions).toList(); // Take only the first `maxQuestions` items
+    return generatedQuestions.take(maxQuestions).toList(); // Take only the first maxQuestions items
   }
 
   @override
@@ -113,7 +124,7 @@ class _QuizPageState extends State<QuizPage> {
           Expanded(
             child: RepaeatContainer(
               color: const Color(0xFF1D1E33),
-              cardWidget :Padding(
+              cardWidget: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Center(
                   child: Text(
@@ -141,73 +152,99 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
           ),
-        ...options.asMap().entries.map((entry) {
-      int index = entry.key;
-      var option = entry.value;
-
-      return Padding(
-        padding: EdgeInsets.all(15.0),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(buttonColors[index % buttonColors.length]),
-          ),
-          onPressed: () {
-            checkAnswer(option);
-          },
-          child: Text(
-            option.toString(),
-            style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
-    }).toList(),
 
 
-    Row(
+          ...options.asMap().entries.map((entry) {
+            int index = entry.key;
+            var option = entry.value;
+            return Padding(
+              padding: EdgeInsets.all(15.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(buttonColors[index % buttonColors.length]),
+                ),
+                onPressed: () {
+                  checkAnswer(option);
+                },
+                child: Text(
+                  option.toString(),
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Color(0xFFEB1555))
-                ),
-                onPressed: () {
-                  // Navigate to generate table page
+              GestureDetector(
+                onTap: () {
+                  PlaySound('note7.mp3');
                   Navigator.pop(context);
                 },
-                child: Text('Generate Table',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                ),),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Color(0xFFEB1555))
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEB1555),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(
+                      color: Colors.black, // Border color
+                      width: 1.0, // Border width
+                    ),
+                  ),
+                  margin: const EdgeInsets.only(
+                    top: 10,
+                    bottom: 20,
+                  ),
+                  height: 50,
+                  width: 170,
+                  child: const Center(
+                    child: Text(
+                        "Generate Table",
+                        style: nStyle
+                    ),
+                  ),
                 ),
-                onPressed: () {
+              ),
+              GestureDetector(
+                onTap: () {
                   if (questionIndex < maxQuestions - 1) {
                     setState(() {
+                      PlaySound('note7.mp3');
                       quizBrain.nextQuestion();
                       ++questionIndex;
                     });
                   }
                 },
-                child: Text('Next Question',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                )),
-              ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEB1555),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(
+                      color: Colors.black, // Border color
+                      width: 1.0, // Border width
+                    ),
+                  ),
+                  margin: const EdgeInsets.only(
+                    top: 10,
+                    bottom: 20,
+                  ),
+                  height: 50,
+                  width: 170,
+                  child: const Center(
+                    child: Text(
+                        "Next Question",
+                        style: nStyle
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
           Row(
             children: scoreKeeper,
           ),
-          // Display feedback text here
-
         ],
       ),
     );

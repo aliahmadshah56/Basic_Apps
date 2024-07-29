@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:tablequizapp/quiz.dart';
 import 'package:tablequizapp/tstyle.dart';
@@ -11,6 +12,11 @@ class genTable extends StatelessWidget {
 
   genTable({required this.tableNumber, required this.start, required this.end});
 
+  void PlaySound(String fileName) {
+    AssetsAudioPlayer.newPlayer().open(
+      Audio('assets/$fileName'),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +54,7 @@ class genTable extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              PlaySound('note7.mp3');
               Navigator.push(
                 context,
                 MaterialPageRoute(
