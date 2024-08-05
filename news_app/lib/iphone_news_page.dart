@@ -6,23 +6,22 @@ import '../models/article.dart';
 const String NEWS_API_KEY = "69514a079325426e8ca97d9fa2fb25ca";
 const String PLACEHOLDER_IMAGE_LINK = 'https://via.placeholder.com/150';
 
-class BbcNewsPage extends StatefulWidget {
-  const BbcNewsPage({super.key});
+class IphoneNewsPage extends StatefulWidget {
+  const IphoneNewsPage({super.key});
 
   @override
-  State<BbcNewsPage> createState() => _BbcNewsPageState();
+  State<IphoneNewsPage> createState() => _IphoneNewsPageState();
 }
 
-class _BbcNewsPageState extends State<BbcNewsPage> {
+class _IphoneNewsPageState extends State<IphoneNewsPage> {
   final Dio dio = Dio();
-
   List<Article> articles = [];
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _getBbcNews();
+    _getIphoneNews();
   }
 
   @override
@@ -31,7 +30,7 @@ class _BbcNewsPageState extends State<BbcNewsPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.redAccent,
-        title: Text('BBC News', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('iPhone News', style: TextStyle(fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -39,52 +38,44 @@ class _BbcNewsPageState extends State<BbcNewsPage> {
           },
         ),
       ),
-      body: _buildUi(),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _buildUi(),
     );
   }
 
   Widget _buildUi() {
-    if (isLoading) {
-      return Center(
-        child: CircularProgressIndicator(), // Show loading indicator
-      );
-    } else if (articles.isEmpty) {
-      return Center(
-        child: Text('No articles found'), // Show message if no articles
-      );
-    } else {
-      return ListView.builder(
-        itemCount: articles.length,
-        itemBuilder: (context, index) {
-          final article = articles[index];
-          return ListTile(
-            onTap: () {
-              _launchUrl(article.url ?? "");
-            },
-            leading: Image.network(
-              article.urlToImage ?? PLACEHOLDER_IMAGE_LINK,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
-            ),
-            title: Text(
-              article.title ?? "",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(article.publishedAt ?? ""),
-          );
-        },
-      );
-    }
+    return ListView.builder(
+      itemCount: articles.length,
+      itemBuilder: (context, index) {
+        final article = articles[index];
+        return ListTile(
+          onTap: () {
+            _launchUrl(article.url ?? "");
+          },
+          leading: Image.network(
+            article.urlToImage ?? PLACEHOLDER_IMAGE_LINK,
+            height: 100, // Adjust height as needed
+            width: 100,
+            fit: BoxFit.cover,
+          ),
+          title: Text(
+            article.title ?? "",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: Text(article.publishedAt ?? ""),
+        );
+      },
+    );
   }
 
-  Future<void> _getBbcNews() async {
+  Future<void> _getIphoneNews() async {
     setState(() {
       isLoading = true;
     });
     try {
       final response = await dio.get(
-        'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${NEWS_API_KEY}',
+        'https://newsapi.org/v2/everything?q=Apple&from=2024-08-04&sortBy=popularity&apiKey=${NEWS_API_KEY}',
       );
 
       final articlesJson = response.data["articles"] as List;
@@ -93,7 +84,7 @@ class _BbcNewsPageState extends State<BbcNewsPage> {
         isLoading = false;
       });
     } catch (e) {
-      print('Error fetching BBC news: $e');
+      print('Error fetching iPhone news: $e');
       setState(() {
         isLoading = false;
       });

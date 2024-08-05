@@ -1,6 +1,6 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'news_selection_page.dart';
+import 'display.dart'; // Import the file where BottomNavPage is defined
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'News App',
-      home: NewsSelectionPage(),
+      home: BottomNavPage(), // Update this to use BottomNavPage
     );
   }
 }

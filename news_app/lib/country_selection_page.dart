@@ -9,7 +9,7 @@ class CountrySelectionPage extends StatefulWidget {
 }
 
 class _CountrySelectionPageState extends State<CountrySelectionPage> {
-  String? selectedCountry = '';
+  String? selectedCountry;
 
   final List<String> countryCodes = [
     'us', // United States
@@ -23,18 +23,11 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Country',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: Text('Select Country', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.grey,
-        centerTitle:true
+        centerTitle: true,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.grey],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -72,6 +65,7 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
                       });
                       if (selectedCountry != null &&
                           countryCodes.contains(selectedCountry)) {
+                        print('Selected Country: $selectedCountry');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
