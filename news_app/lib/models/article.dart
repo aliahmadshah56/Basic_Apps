@@ -47,7 +47,6 @@ class Article {
   }
 }
 
-// Ensure you have a Source class like this:
 
 class Source {
   String? id;
@@ -58,13 +57,11 @@ class Source {
     this.name,
   });
 
-  // JSON deserialization
   factory Source.fromJson(Map<String, dynamic> json) => Source(
     id: json['id'],
     name: json['name'],
   );
 
-  // JSON serialization
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,

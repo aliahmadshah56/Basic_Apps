@@ -1,22 +1,20 @@
-// lib/home_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/article.dart';
 
 const String NEWS_API_KEY = "69514a079325426e8ca97d9fa2fb25ca";
-const String PLACEHOLDER_IMAGE_LINK = 'https://example.com/placeholder.jpg';
+const String PLACEHOLDER_IMAGE_LINK = 'https://via.placeholder.com/150';
 
-class HomePage extends StatefulWidget {
-  final String country;
-
-  const HomePage({super.key, required this.country});
+class BbcNewsPage extends StatefulWidget {
+  const BbcNewsPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<BbcNewsPage> createState() => _BbcNewsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _BbcNewsPageState extends State<BbcNewsPage> {
   final Dio dio = Dio();
 
   List<Article> articles = [];
@@ -24,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _getNews();
+    _getBbcNews();
   }
 
   @override
@@ -32,11 +30,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'News',
-
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        backgroundColor: Colors.redAccent,
+        title: Text('BBC News', style: TextStyle(fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -73,10 +68,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _getNews() async {
+  Future<void> _getBbcNews() async {
     try {
       final response = await dio.get(
-        'https://newsapi.org/v2/top-headlines?country=${widget.country}&apiKey=${NEWS_API_KEY}',
+        'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${NEWS_API_KEY}',
       );
 
       final articlesJson = response.data["articles"] as List;
@@ -84,7 +79,7 @@ class _HomePageState extends State<HomePage> {
         articles = articlesJson.map((a) => Article.fromJson(a)).toList();
       });
     } catch (e) {
-      print('Error fetching news: $e');
+      print('Error fetching BBC news: $e');
     }
   }
 

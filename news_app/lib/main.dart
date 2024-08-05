@@ -1,5 +1,6 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
-import 'country_selection_page.dart';
+import 'news_selection_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,10 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'News App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const CountrySelectionPage(),
+      home: NewsSelectionPage(),
     );
   }
 }
