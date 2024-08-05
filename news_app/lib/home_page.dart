@@ -44,11 +44,11 @@ class _HomePageState extends State<HomePage> {
   Widget _buildUi() {
     if (isLoading) {
       return Center(
-        child: CircularProgressIndicator(), // Show loading indicator
+        child: CircularProgressIndicator(),
       );
     } else if (articles.isEmpty) {
       return Center(
-        child: Text('No articles found'), // Show message if no articles
+        child: Text('No articles found'),
       );
     } else {
       return ListView.builder(
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             },
             leading: Image.network(
               article.urlToImage ?? PLACEHOLDER_IMAGE_LINK,
-              height: 100, // Adjusted size for better fit
+              height: 100,
               width: 100,
               fit: BoxFit.cover,
             ),

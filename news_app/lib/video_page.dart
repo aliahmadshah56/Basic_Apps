@@ -6,14 +6,14 @@ import '../models/article.dart';
 const String NEWS_API_KEY = "69514a079325426e8ca97d9fa2fb25ca";
 const String PLACEHOLDER_IMAGE_LINK = 'https://via.placeholder.com/150';
 
-class BbcNewsPage extends StatefulWidget {
-  const BbcNewsPage({super.key});
+class VideoPage extends StatefulWidget {
+  const VideoPage({super.key});
 
   @override
-  State<BbcNewsPage> createState() => _BbcNewsPageState();
+  State<VideoPage> createState() => _VideoPageState();
 }
 
-class _BbcNewsPageState extends State<BbcNewsPage> {
+class _VideoPageState extends State<VideoPage> {
   final Dio dio = Dio();
 
   List<Article> articles = [];
@@ -30,7 +30,8 @@ class _BbcNewsPageState extends State<BbcNewsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('BBC News', style: TextStyle(fontWeight: FontWeight.bold)),
+
+        title: Text('News', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: _buildUi(),
     );
@@ -54,17 +55,35 @@ class _BbcNewsPageState extends State<BbcNewsPage> {
             onTap: () {
               _launchUrl(article.url ?? "");
             },
-            leading: Image.network(
-              article.urlToImage ?? PLACEHOLDER_IMAGE_LINK,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+            contentPadding: EdgeInsets.all(8.0),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(
+                  article.urlToImage ?? PLACEHOLDER_IMAGE_LINK,
+                  height: 150,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: 8.0),
+
+                Text(
+                  article.title ?? "",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+                SizedBox(height: 4.0),
+                Text(
+                  article.publishedAt ?? "",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
             ),
-            title: Text(
-              article.title ?? "",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(article.publishedAt ?? ""),
           );
         },
       );

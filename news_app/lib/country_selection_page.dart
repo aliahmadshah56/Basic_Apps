@@ -24,7 +24,6 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select Country', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.grey,
         centerTitle: true,
       ),
       body: Container(

@@ -132,7 +132,7 @@ class NewsSelectionPage extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Colors.greenAccent, // Changed color for distinction
+                    color: Colors.greenAccent,
                     borderRadius: BorderRadius.circular(12.0),
                     boxShadow: [
                       BoxShadow(

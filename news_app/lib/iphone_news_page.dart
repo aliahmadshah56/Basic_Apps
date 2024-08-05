@@ -29,8 +29,7 @@ class _IphoneNewsPageState extends State<IphoneNewsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.redAccent,
-        title: Text('iPhone News', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('Teck News', style: TextStyle(fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
