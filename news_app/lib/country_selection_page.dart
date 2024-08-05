@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'home_page.dart';
 
 class CountrySelectionPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     'in', // India
     'jp', // Japan
     'de', // Germany
-  ]; // Top 5 countries by population
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +78,19 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
                     items: countryCodes.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(
-                          _getCountryName(value),
-                          style: TextStyle(fontSize: 16),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/flags/${value}.svg',
+                              width: 30,
+                              height: 20,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              _getCountryName(value),
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       );
                     }).toList(),

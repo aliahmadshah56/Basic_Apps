@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   dio: ^5.0.0
   url_launcher: ^6.1.5
+  flutter_svg: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +66,7 @@ flutter:
    -  assets/country_logo.png
    -  assets/bbc_logo.png
    -  assets/iphone_logo.png
+   - assets/flags/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

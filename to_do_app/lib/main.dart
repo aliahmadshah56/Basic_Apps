@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/ui/home.dart';
+import 'ui/todoscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,13 +7,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'ToDOApp',
-      home: const Home( ),
+      title: 'ToDo App',
+      home: const ToDoScreen(),
     );
   }
 }
-

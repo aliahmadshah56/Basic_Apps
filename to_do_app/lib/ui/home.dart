@@ -11,12 +11,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-      title: Text('To Do'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('To Do'),
         centerTitle: true,
-        titleTextStyle: TextStyle(color: Colors.white,fontSize: 25),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 25),
         backgroundColor: Colors.black54,
-    ),
-    body: ToDoScreen(),);
+      ),
+      body: const ToDoScreen(),
+    );
   }
 }

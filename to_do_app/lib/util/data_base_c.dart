@@ -1,14 +1,13 @@
-import 'dart:io'; // Corrected import statement
+import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:to_do_app/model/todoitem.dart';
+import '../model/todoitem.dart';
+
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
-
   factory DatabaseHelper() => _instance;
-
   DatabaseHelper._internal();
 
   final String tableName = "todoTbl";
@@ -39,12 +38,12 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     await db.execute(
-      "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY, $columnItemName TEXT, $columnDateCreated TEXT)",
+      "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnItemName TEXT, $columnDateCreated TEXT)",
     );
     print("Table is created");
   }
 
-  Future<int> saveItem(TodoItem item) async {
+  Future<int> saveItem(ToDoItem item) async {
     var dbClient = await db;
     int res = await dbClient.insert(tableName, item.toMap());
     print(res.toString());
@@ -53,10 +52,11 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> getItems() async {
     var dbClient = await db;
-    var result = await dbClient.rawQuery(
-      "SELECT * FROM $tableName ORDER BY $columnItemName ASC",
+    var result = await dbClient.query(
+      tableName,
+      orderBy: "$columnDateCreated DESC",
     );
-    return result.toList();
+    return result;
   }
 
   Future<int> getCount() async {
@@ -66,14 +66,15 @@ class DatabaseHelper {
     ) ?? 0;
   }
 
-  Future<TodoItem?> getItem(int id) async {
+  Future<ToDoItem?> getItem(int id) async {
     var dbClient = await db;
-    var result = await dbClient.rawQuery(
-      "SELECT * FROM $tableName WHERE $columnId = ?",
-      [id],
+    var result = await dbClient.query(
+      tableName,
+      where: "$columnId = ?",
+      whereArgs: [id],
     );
     if (result.isEmpty) return null;
-    return TodoItem.fromMap(result.first);
+    return ToDoItem.fromMap(result.first);
   }
 
   Future<int> deleteItem(int id) async {
@@ -85,7 +86,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<int> updateItem(TodoItem item) async {
+  Future<int> updateItem(ToDoItem item) async {
     var dbClient = await db;
     return await dbClient.update(
       tableName,
