@@ -1,9 +1,14 @@
 class ToDoItem {
   int? id;
-  final String itemName;
+  String itemName;
   final String dateCreated;
 
   ToDoItem(this.itemName, this.dateCreated, {this.id});
+
+  // Add a setter for itemName
+  setItemName(String newName) {
+    itemName = newName;
+  }
 
   Map<String, dynamic> toMap() {
     return {
